@@ -47,6 +47,8 @@ class QuestionnaireController extends Controller
 
         // Attach chemistry questions to the questionnaire
         $questionnaire->questions()->attach($chemistryQuestions);
+
+        Mail::to('admin@admin.com')->send(new StudentMail($questionnaire));
         return view('welcome', compact('questionnaire'));
     }
 }

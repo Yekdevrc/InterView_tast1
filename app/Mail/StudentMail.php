@@ -16,9 +16,10 @@ class StudentMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $questionnaire;
+    public function __construct($questionnaire)
     {
-        //
+        $this->questionnaire=$questionnaire;
     }
 
     /**
@@ -28,6 +29,7 @@ class StudentMail extends Mailable
     {
         return new Envelope(
             subject: 'Student Mail',
+            with: $this->questionnaire,
         );
     }
 
