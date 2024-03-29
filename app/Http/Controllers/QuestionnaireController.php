@@ -24,27 +24,29 @@ class QuestionnaireController extends Controller
 
     public function store(Request $request)
     {
-        $physicsQuestions = Question::where('type', 'physics')->inRandomOrder()->limit(5)->get();
-
-        // Get 5 random chemistry questions
-        $chemistryQuestions = Question::where('type', 'chemistry')->inRandomOrder()->limit(5)->get();
 
         $questionnaire = Questionnaire::create([
             'title'=> $request->title,
             'expired_at'=> $request->expired_at
         ]);
 
+
+        return redirect(route('questionnaire.show', $questionnaire->id));
+    }
+
+    public function show($id)
+    {
+        $questionnaire=Questionnaire::findOrFail($id);
+        $physicsQuestions = Question::where('type', 'physics')->inRandomOrder()->limit(5)->get();
+
+        // Get 5 random chemistry questions
+        $chemistryQuestions = Question::where('type', 'chemistry')->inRandomOrder()->limit(5)->get();
+        
         // Attach physics questions to the questionnaire
         $questionnaire->questions()->attach($physicsQuestions);
 
         // Attach chemistry questions to the questionnaire
         $questionnaire->questions()->attach($chemistryQuestions);
-
-        return redirect(route('questionnaire.show'));
-    }
-
-    public function show()
-    {
-        return view('welcome');
+        return view('welcome', compact('questionnaire'));
     }
 }
