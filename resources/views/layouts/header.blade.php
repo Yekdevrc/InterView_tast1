@@ -9,6 +9,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ route('question.index') }}">Question</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ route('student.index') }}">Student</a>
+          </li>
         </ul>
       </div>
     </div>

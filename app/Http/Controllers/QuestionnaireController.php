@@ -10,6 +10,18 @@ use Illuminate\Http\Request;
 class QuestionnaireController extends Controller
 {
 
+    public function index()
+    {
+        $questionnaires=Questionnaire::where('expired_at', '>=', now())->get();
+
+        return view('dashboard', compact('questionnaires'));
+    }
+
+    public function create()
+    {
+        return view('welcome');
+    }
+
     public function store(Request $request)
     {
         $physicsQuestions = Question::where('type', 'physics')->inRandomOrder()->limit(5)->get();
@@ -28,6 +40,11 @@ class QuestionnaireController extends Controller
         // Attach chemistry questions to the questionnaire
         $questionnaire->questions()->attach($chemistryQuestions);
 
-        return view('questionnaire.index', compact('questionnaire'));
+        return redirect(route('questionnaire.show'));
+    }
+
+    public function show()
+    {
+        return view('welcome');
     }
 }
